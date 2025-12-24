@@ -1,0 +1,93 @@
+{
+  "name": "Get Status",
+  "nodes": [
+    {
+      "parameters": {
+        "function": "",
+        "payload": "={ \"instance_id\": \"{{ $json.body.instance_id }}\", \"action\": \"status\" }"
+      },
+      "type": "n8n-nodes-base.awsLambda",
+      "typeVersion": 1,
+      "position": [
+        224,
+        0
+      ],
+      "id": "7",
+      "name": "Get Status",
+      "credentials": {
+        "aws": {
+          "id": "",
+          "name": "AWS (IAM) account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [
+        0,
+        0
+      ],
+      "id": "",
+      "name": "Status",
+      "webhookId": ""
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.5,
+      "position": [
+        448,
+        0
+      ],
+      "id": "",
+      "name": "Respond to Status"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Get Status": {
+      "main": [
+        [
+          {
+            "node": "Respond to Status",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Status": {
+      "main": [
+        [
+          {
+            "node": "Get Status",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1",
+    "timeSavedMode": "fixed",
+    "callerPolicy": "workflowsFromSameOwner",
+    "availableInMCP": true
+  },
+  "versionId": "",
+  "meta": {
+    "instanceId": ""
+  },
+  "id": "",
+  "tags": []
+}

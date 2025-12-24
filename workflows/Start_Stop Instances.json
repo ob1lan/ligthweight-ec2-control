@@ -1,0 +1,167 @@
+{
+  "name": "Start/Stop Instances copy",
+  "nodes": [
+    {
+      "parameters": {
+        "function": "",
+        "payload": "={ \"instance_id\": \"{{ $json.body.instance_id }}\", \"action\": \"start\" }"
+      },
+      "type": "n8n-nodes-base.awsLambda",
+      "typeVersion": 1,
+      "position": [
+        -576,
+        -560
+      ],
+      "id": "b2db2939-9903-4973-a463-affd48188f5f",
+      "name": "Start Instance",
+      "credentials": {
+        "aws": {
+          "id": "",
+          "name": ""
+        }
+      }
+    },
+    {
+      "parameters": {
+        "function": "",
+        "payload": "={ \"instance_id\": \"{{ $json.body.instance_id }}\", \"action\": \"stop\" }"
+      },
+      "type": "n8n-nodes-base.awsLambda",
+      "typeVersion": 1,
+      "position": [
+        -576,
+        -336
+      ],
+      "id": "47e34dbf-3ef2-4b70-a92b-e680e9383ca0",
+      "name": "Stop Instance",
+      "credentials": {
+        "aws": {
+          "id": "",
+          "name": ""
+        }
+      }
+    },
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [
+        -800,
+        -560
+      ],
+      "id": "",
+      "name": "Start",
+      "webhookId": ""
+    },
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [
+        -800,
+        -336
+      ],
+      "id": "",
+      "name": "Stop",
+      "webhookId": ""
+    },
+    {
+      "parameters": {
+        "respondWith": "allIncomingItems",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.5,
+      "position": [
+        -352,
+        -336
+      ],
+      "id": "",
+      "name": "Respond to Stop"
+    },
+    {
+      "parameters": {
+        "respondWith": "allIncomingItems",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.5,
+      "position": [
+        -352,
+        -560
+      ],
+      "id": "",
+      "name": "Respond to Start"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Start Instance": {
+      "main": [
+        [
+          {
+            "node": "Respond to Start",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Stop Instance": {
+      "main": [
+        [
+          {
+            "node": "Respond to Stop",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Start": {
+      "main": [
+        [
+          {
+            "node": "Start Instance",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Stop": {
+      "main": [
+        [
+          {
+            "node": "Stop Instance",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1",
+    "timeSavedMode": "fixed",
+    "callerPolicy": "workflowsFromSameOwner",
+    "availableInMCP": true
+  },
+  "versionId": "1018b56a-0d96-485f-9951-c69e45c61387",
+  "meta": {
+    "instanceId": ""
+  },
+  "id": "",
+  "tags": []
+}
