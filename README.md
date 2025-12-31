@@ -45,7 +45,7 @@ A modern, clean web interface for managing AWS EC2 instances. This application i
     STOP_INSTANCE_WEBHOOK_URL=https://your-n8n-instance.com/webhook/...
     GET_STATUS_WEBHOOK_URL=https://your-n8n-instance.com/webhook/...
     ```
-4. **Create the file to declare your instances**:
+4. **(Optional) Create the file to declare your instances**:
 Create the data/instances.json file, and declare the unique ID (whatever you want), instance ID (from AWS EC2) and name for each of your instances, such as:
      ```json
     [
@@ -61,7 +61,7 @@ Create the data/instances.json file, and declare the unique ID (whatever you wan
       }
     ]
     ```
-
+Otherwise, you can add them via the UI directly, which will take care of creating the JSON file.
 
 4.  **Run the application**:
     ```bash
