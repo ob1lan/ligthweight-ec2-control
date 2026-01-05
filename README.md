@@ -22,7 +22,7 @@ A modern, clean web interface for managing AWS EC2 instances. This application i
 
 1.  **Clone the repository** (if you haven't already):
     ```bash
-    git clone https://github.com/ob1lan/ligthweight-ec2-control
+    git clone https://github.com/ob1lan/lightweight-ec2-control
     cd ligthweight-ec2-control
     ```
 
