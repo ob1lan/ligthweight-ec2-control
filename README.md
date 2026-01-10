@@ -10,34 +10,19 @@ A modern, clean web interface for managing AWS EC2 instances. This application i
 - **Real-time Status**: View current state (Running, Stopped, Pending) and uptime.
 - **Dynamic Management**: Add and remove instance configurations directly from the UI.
 - **Activity Log**: Track recent actions and their outcomes.
-- **Local Persistence**: Instance configurations are saved locally in a JSON file (`data/instances.json`), keeping your data private.
-- **Dark Mode**: Fully supports light and dark themes.
+- **Local Persistence**: Instance configurations are saved locally.
+- **Dark Mode**: Supports light and dark themes.
 
-## Prerequisites
+## Deploy with Docker (Recommended)
 
-- **Node.js**: v18 or later.
-- **n8n Instance**: You need a running n8n instance to handle the backend logic (communicating with AWS).
+This is the easiest and recommended way to deploy the application.
 
-## Setup & Installation
-
-1.  **Clone the repository** (if you haven't already):
-    ```bash
-    git clone https://github.com/ob1lan/lightweight-ec2-control
-    cd ligthweight-ec2-control
-    ```
-
-2.  **Install dependencies**:
-    ```bash
-    npm install
-    ```
-
-3.  **Environment Configuration**:
-    Copy the example environment file to create your local configuration:
+1.  **Environment Configuration**:
+    Create a `.env` file from the example:
     ```bash
     cp .env.example .env
     ```
-
-    Open `.env` and configure your n8n Webhook URLs. The app **will not start** without these variables set.
+    Open `.env` and add your n8n Webhook URLs. The application will not work without them.
 
     ```env
     # n8n Webhook URLs
@@ -45,53 +30,44 @@ A modern, clean web interface for managing AWS EC2 instances. This application i
     STOP_INSTANCE_WEBHOOK_URL=https://your-n8n-instance.com/webhook/...
     GET_STATUS_WEBHOOK_URL=https://your-n8n-instance.com/webhook/...
     ```
-4. **(Optional) Create the file to declare your instances**:
-Create the data/instances.json file, and declare the unique ID (whatever you want), instance ID (from AWS EC2) and name for each of your instances, such as:
-     ```json
-    [
-      {
-        "id": "oratio",
-        "name": "Oratio",
-        "ec2Id": "i-07392ec4d704bf351"
-      },
-      {
-        "id": "wojefr7h3",
-        "name": "Medusa",
-        "ec2Id": "i-04c53e993726664e2"
-      }
-    ]
+
+2.  **Run with Docker Compose**:
+    ```bash
+    docker compose up -d --build
     ```
-Otherwise, you can add them via the UI directly, which will take care of creating the JSON file.
+    The application will be available at [http://localhost:3000](http://localhost:3000).
+
+    Instance data is stored in the `data/` directory on your host machine, ensuring it persists across container restarts.
+
+## n8n Integration
+
+This frontend requires an n8n workflow to communicate with AWS. The workflow must expose three webhooks for starting, stopping, and getting the status of EC2 instances.
+
+- **Workflow Templates**: You can find example workflows in the `workflows/` directory. Import them into your n8n instance.
+- **AWS Credentials**: Ensure your n8n instance has the necessary AWS credentials configured to manage EC2 instances.
+
+## Manual Setup (for Development)
+
+If you prefer to run the application without Docker:
+
+1.  **Prerequisites**:
+    - Node.js v18 or later
+
+2.  **Clone and Install**:
+    ```bash
+    git clone https://github.com/ob1lan/lightweight-ec2-control
+    cd lightweight-ec2-control
+    npm install
+    ```
+
+3.  **Environment Configuration**:
+    Follow the same steps as in the Docker deployment to create and configure your `.env` file.
 
 4.  **Run the application**:
     ```bash
     npm run dev
     ```
     Open [http://localhost:3000](http://localhost:3000) to view the dashboard.
-
-## n8n Integration
-
-This frontend relies on an n8n workflow to communicate with AWS. The workflow should accept `POST` requests with a payload containing `name` and `instance_id`.
-
-### Workflow Templates
-
-Import the provided templates (see the workflows folder) into your n8n instance. Ensure your n8n instance has the correct AWS credentials configured to manage EC2 instances (start/stop/describe).
-
-The workflow is expected to expose three webhooks corresponding to the environment variables defined above.
-
-## Data Storage
-
-Instance configurations (Name and ID) are stored locally in:
-`data/instances.json`
-
-This file is ignored by git to ensure your server details remain private.
-
-## Tech Stack
-
-- **Framework**: [Next.js 16+](https://nextjs.org/) (App Router)
-- **Styling**: [Tailwind CSS](https://tailwindcss.com/)
-- **Icons**: [Lucide React](https://lucide.dev/)
-- **Language**: TypeScript
 
 ## License
 
