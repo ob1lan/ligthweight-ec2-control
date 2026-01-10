@@ -1,0 +1,17 @@
+# Docker Lingo
+Dockerfile
+.dockerignore
+
+# Git
+.git
+.gitignore
+
+# Project
+node_modules
+.next
+npm-debug.log
+README.md
+.env
+.env.local
+.env.production
+.env.test
